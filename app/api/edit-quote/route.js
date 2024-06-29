@@ -13,11 +13,12 @@ export async function PUT(req) {
     try{
         await connectToDb();
 
-        const EditedQuote =await req.json();
+        const EditedQuote = await req.json();
         console.log(EditedQuote);
         const { _id , quote , author} = EditedQuote;
 
         if(!_id){
+            console.log("id is required to edit the quote");
             return NextResponse.json({
                 success: false,
                 message : "id is required to edit the quote",
@@ -29,7 +30,7 @@ export async function PUT(req) {
         });
 
         if(error){
-            console.log(error);
+            console.log(error.message);
             return NextResponse.json({
                 success:false ,
                 message :error.message
@@ -38,16 +39,24 @@ export async function PUT(req) {
 
 
         const editQuote = await Quote.findByIdAndUpdate(
-            {_id : _id } ,
+            _id ,
             {quote , author} ,
             {new : true}
         )
 
         if(editQuote){
-
+            console.log("succesfully edited the quote");
             return NextResponse.json({
                 success:true ,
-                message :"succesfully edited the quote"
+                message :"succesfully edited the quote" ,
+                data : editQuote
+            })
+        }
+        else {
+            console.log("quote not found with id : " , _id);
+            return NextResponse.json({
+                success:false ,
+                message : "there is no quote exist for the id"
             })
         }
     }
