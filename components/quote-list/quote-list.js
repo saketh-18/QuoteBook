@@ -38,7 +38,7 @@ export default function QuoteList() {
     async function handleEdit(){
         const QuoteToBeEdited = {_id : editQuote._id , quote : editQuoteContent , author : editQuoteAuthor}
         console.log(QuoteToBeEdited)
-        const response = await fetch("http://localhost:3000/api/edit-quote" , {
+        const response = await fetch("/api/edit-quote" , {
             method : "PUT" ,
             headers : {
                 "content-type" : "application/json"
@@ -58,7 +58,7 @@ export default function QuoteList() {
     
     async function handleDelete(id){
         
-       const response =  await fetch("http://localhost:3000/api/delete-quote" , {
+       const response =  await fetch("/api/delete-quote" , {
             method: "POST" ,
             headers: {
                 'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ export default function QuoteList() {
     useEffect(() => {
         async function fetchQuotes() {
             try{
-            const response = await fetch("http://localhost:3000/api/get-quote");
+            const response = await fetch("/api/get-quote");
             const data = await response.json();
             setQuotes(data.data); 
             setLoading(false); 
