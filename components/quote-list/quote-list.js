@@ -41,7 +41,8 @@ export default function QuoteList() {
         const response = await fetch("/api/edit-quote" , {
             method : "PUT" ,
             headers : {
-                "content-type" : "application/json"
+                "content-type" : "application/json",
+                "Cache-Control": "no-cache"
             } ,
             body : JSON.stringify(QuoteToBeEdited)
         });
@@ -62,6 +63,7 @@ export default function QuoteList() {
             method: "POST" ,
             headers: {
                 'Content-Type': 'application/json',
+                "Cache-Control": "no-cache"
             },
             body : JSON.stringify({id})
         });
